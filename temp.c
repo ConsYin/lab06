@@ -61,11 +61,12 @@ int main (void) {
       float tempCurrent = strtof(tmp, NULL);
 
       if (i == 0) {
-        tempMax = tempCurrent;gcvt(tempMax, 6, maxc); 
-        tempMin = tempCurrent;gcvt(tempMin, 6, minc); 
-        tempFirst = tempCurrent;gcvt(tempFirst, 6, curc); 
+        tempMax = tempCurrent;
+        tempMin = tempCurrent;
+        tempFirst = tempCurrent;
         tempMax2 = tempCurrent;
         tempMin2 = tempCurrent;
+        gcvt(tempMax, 6, maxc); gcvt(tempMin, 6, minc); gcvt(tempFirst, 6, curc);
         ifttt("https://maker.ifttt.com/trigger/temp/with/key/b1QwPwFliGUWnU6LYgRbb1",maxc,minc,curc);
         i++;
       }
@@ -83,11 +84,13 @@ int main (void) {
         }
         if (tempCurrent - tempMax2 >= 1000) {
           tempMax2 = tempCurrent;
+          gcvt(tempMax2, 6, maxc); gcvt(tempMin, 6, minc); gcvt(tempFirst, 6, curc);
           ifttt("https://maker.ifttt.com/trigger/temp/with/key/b1QwPwFliGUWnU6LYgRbb1",maxc,minc,curc);
         }
 
         if (tempMin2 - tempCurrent >= 1000) {
           tempMin2 = tempCurrent;
+          gcvt(tempMax, 6, maxc); gcvt(tempMin, 6, minc); gcvt(tempFirst, 6, curc);
           ifttt("https://maker.ifttt.com/trigger/temp/with/key/b1QwPwFliGUWnU6LYgRbb1",maxc,minc,curc);
 
         }
