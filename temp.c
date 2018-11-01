@@ -64,22 +64,22 @@ int main (int argc,char *argv[]) {
       if (tempCurrent2 < tempMin) {
           tempMin = tempCurrent2;
         }
-      if (i==0){}
-      else if(cumulative>=1000)
+      if (i == 0) {
+        tempMax = tempCurrent2;
+        tempMin = tempCurrent2;
+        tempFirst = tempCurrent2;
+        gcvt(tempMax/1000, 6, maxc); gcvt(tempMin/1000, 6, minc); gcvt(tempFirst/1000 , 6, curc);
+        ifttt("https://maker.ifttt.com/trigger/temp/with/key/b1QwPwFliGUWnU6LYgRbb1",maxc,minc,curc);
+        i++;
+      }
+      else if(cumulative>=1000 ||cumulative<=-1000 )
       {
        gcvt(tempMax/1000, 6, maxc); gcvt(tempMin/1000, 6, minc); gcvt(tempCurrent2/1000, 6, curc);
        ifttt("https://maker.ifttt.com/trigger/temp/with/key/b1QwPwFliGUWnU6LYgRbb1",maxc,minc,curc);
        cumulative=0;
       }
       tempCurrent = tempCurrent2;/*assign the value to current here*/ 
-      if (i == 0) {
-        tempMax = tempCurrent;
-        tempMin = tempCurrent;
-        tempFirst = tempCurrent;
-        gcvt(tempMax/1000, 6, maxc); gcvt(tempMin/1000, 6, minc); gcvt(tempFirst/1000 +1, 6, curc);
-        ifttt("https://maker.ifttt.com/trigger/temp/with/key/b1QwPwFliGUWnU6LYgRbb1",maxc,minc,curc);
-        i++;
-      }
+      
       
       printf("Current Temp: %.3f C\nMax Temp: %.3f C\nMin Temp: %.3f C\n\n\n", tempCurrent / 1000, tempMax / 1000, tempMin / 1000);
       /*print out what is going on.*/
