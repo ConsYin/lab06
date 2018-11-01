@@ -58,7 +58,7 @@ int main (int argc,char *argv[]) {
       tempCurrent2=strtof(tmp, NULL)
       change=tempCurrent2-tempCurrent;/*the current is still last time's "Current"*/
       cumulative+=change;
-      if (i==0){};
+      if (i==0){}
       else if(cumulative>=1000)
       {
        gcvt(tempMax/1000, 6, maxc); gcvt(tempMin/1000, 6, minc); gcvt(tempCurrent2/1000, 6, curc);
