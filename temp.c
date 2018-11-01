@@ -58,6 +58,12 @@ int main (int argc,char *argv[]) {
       tempCurrent2=strtof(tmp, NULL);
       change=tempCurrent2-tempCurrent;/*the current is still last time's "Current"*/
       cumulative+=change;
+      if (tempCurrent2 > tempMax) {
+          tempMax = tempCurrent;
+        }
+      if (tempCurrent2 < tempMin) {
+          tempMin = tempCurrent;
+        }
       if (i==0){}
       else if(cumulative>=1000)
       {
@@ -79,23 +85,7 @@ int main (int argc,char *argv[]) {
       /*print out what is going on.*/
       time_t second = time(NULL);
       while (difftime(time(NULL), second) <= 1) {
-        while (tempCurrent > tempMax) {
-          tempMax = tempCurrent;
-        }
-        while (tempCurrent < tempMin) {
-          tempMin = tempCurrent;
-        }
-        /*if (tempCurrent - tempMax2 >= 1000) {
-          tempMax2 = tempCurrent;
-          gcvt(tempMax2/1000, 6, maxc); gcvt(tempMin/1000, 6, minc); gcvt(tempFirst/1000, 6, curc);
-          ifttt("https://maker.ifttt.com/trigger/temp/with/key/b1QwPwFliGUWnU6LYgRbb1",maxc,minc,curc);
-        }
-wrong idea
-        if (tempMin2 - tempCurrent >= 1000) {
-          tempMin2 = tempCurrent;
-          gcvt(tempMax/1000, 6, maxc); gcvt(tempMin/1000, 6, minc); gcvt(tempCurrent/1000, 6, curc);
-          ifttt("https://maker.ifttt.com/trigger/temp/with/key/b1QwPwFliGUWnU6LYgRbb1",maxc,minc,curc);
-        }*/
+        
       }
     }
     close(fd);
