@@ -64,7 +64,7 @@ int main (void) {
         tempFirst = tempCurrent;
         tempMax2 = tempCurrent;
         tempMin2 = tempCurrent;
-        //ifttt
+        //ifttt("https://maker.ifttt.com/trigger/temp/with/key/b1QwPwFliGUWnU6LYgRbb1","temp","max","min");
         i++;
       }
 
