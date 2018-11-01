@@ -42,7 +42,7 @@ int main (int argc,char *argv[]) {
 
   // Read temp continuously
   // Opening the device's file triggers new reading
-  float tempFirst,tempMax,tempMin,tempCurrent;//declare all the variable that is available.
+  float tempFirst,tempMax,tempMin,tempCurrent,tempCurrent2;//declare all the variable that is available.
   int i = 0; 
   char maxc[7],minc[7],curc[7]; 
   float cumulative=0;/*this is the value that represent the cumulative change*/
@@ -55,16 +55,17 @@ int main (int argc,char *argv[]) {
     while ((numRead = read(fd, buf, 256)) > 0)
     {
       strncpy(tmp, strstr(buf, "t=") + 2, 5);
-      change=strtof(tmp, NULL)-tempCurrent;/*the current is still last time's "Current"*/
+      tempCurrent2=strtof(tmp, NULL)
+      change=tempCurrent2-tempCurrent;/*the current is still last time's "Current"*/
       cumulative+=change;
       if (i==0){};
       else if(cumulative>=1000)
       {
-       gcvt(tempMax/1000, 6, maxc); gcvt(tempMin/1000, 6, minc); gcvt(tempCurrent/1000, 6, curc);
+       gcvt(tempMax/1000, 6, maxc); gcvt(tempMin/1000, 6, minc); gcvt(tempCurrent2/1000, 6, curc);
        ifttt("https://maker.ifttt.com/trigger/temp/with/key/b1QwPwFliGUWnU6LYgRbb1",maxc,minc,curc);
        cumulative=0;
       }
-      tempCurrent = strtof(tmp, NULL);/*assign the value to current here*/ 
+      tempCurrent = tempCurrent2;/*assign the value to current here*/ 
       if (i == 0) {
         tempMax = tempCurrent;
         tempMin = tempCurrent;
