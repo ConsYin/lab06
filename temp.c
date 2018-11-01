@@ -59,10 +59,10 @@ int main (int argc,char *argv[]) {
       change=tempCurrent2-tempCurrent;/*the current is still last time's "Current"*/
       cumulative+=change;
       if (tempCurrent2 > tempMax) {
-          tempMax = tempCurrent;
+          tempMax = tempCurrent2;
         }
       if (tempCurrent2 < tempMin) {
-          tempMin = tempCurrent;
+          tempMin = tempCurrent2;
         }
       if (i==0){}
       else if(cumulative>=1000)
