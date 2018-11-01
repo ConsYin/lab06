@@ -42,8 +42,10 @@ int main (void) {
   // Read temp continuously
   // Opening the device's file triggers new reading
   float tempFirst,tempMax,tempMin,tempMax2,tempMin2;//declare all the variable that is available.
-  int i = 0;
-
+  int i = 0; 
+  char maxc[7],min[7],curc[7]; 
+  
+    
 
   while (1) {
     int fd = open(devPath, O_RDONLY);
@@ -59,12 +61,12 @@ int main (void) {
       float tempCurrent = strtof(tmp, NULL);
 
       if (i == 0) {
-        tempMax = tempCurrent;
-        tempMin = tempCurrent;
-        tempFirst = tempCurrent;
+        tempMax = tempCurrent;gcvt(tempMax, 6, maxc); 
+        tempMin = tempCurrent;gcvt(tempMin, 6, minc); 
+        tempFirst = tempCurrent;gcvt(tempFirst, 6, curc); 
         tempMax2 = tempCurrent;
         tempMin2 = tempCurrent;
-        //ifttt("https://maker.ifttt.com/trigger/temp/with/key/b1QwPwFliGUWnU6LYgRbb1","temp","max","min");
+        ifttt("https://maker.ifttt.com/trigger/temp/with/key/b1QwPwFliGUWnU6LYgRbb1",maxc,minc,curc);
         i++;
       }
 
@@ -81,12 +83,13 @@ int main (void) {
         }
         if (tempCurrent - tempMax2 >= 1000) {
           tempMax2 = tempCurrent;
-          //ifttt
+          ifttt("https://maker.ifttt.com/trigger/temp/with/key/b1QwPwFliGUWnU6LYgRbb1",maxc,minc,curc);
         }
 
         if (tempMin2 - tempCurrent >= 1000) {
           tempMin2 = tempCurrent;
-          //ifttt
+          ifttt("https://maker.ifttt.com/trigger/temp/with/key/b1QwPwFliGUWnU6LYgRbb1",maxc,minc,curc);
+
         }
       }
     }
