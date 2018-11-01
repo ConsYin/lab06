@@ -6,8 +6,10 @@
 #include <unistd.h>
 #include <time.h>
 #include "ifttt.h"
-
-int main (void) {
+//28-021313c7caaa
+int main (int argc,char *argv[]) {
+  if(argc!=2){printf(" wrong arguments");exit(); }
+  
   DIR *dir;
   struct dirent *dirent;
   char dev[16];      // Dev ID
