@@ -55,7 +55,7 @@ int main (int argc,char *argv[]) {
     while ((numRead = read(fd, buf, 256)) > 0)
     {
       strncpy(tmp, strstr(buf, "t=") + 2, 5);
-      tempCurrent2=strtof(tmp, NULL)
+      tempCurrent2=strtof(tmp, NULL);
       change=tempCurrent2-tempCurrent;/*the current is still last time's "Current"*/
       cumulative+=change;
       if (i==0){}
