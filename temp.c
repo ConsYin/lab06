@@ -8,8 +8,7 @@
 #include "ifttt.h"
 //28-021313c7caaa
 int main (int argc,char *argv[]) {
-  if(argc!=2){printf(" wrong arguments");exit(); }
-  
+  if(argc!=2){printf(" wrong arguments");exit(1); }/*if argc, the length is not two, seems something is wrong*/
   DIR *dir;
   struct dirent *dirent;
   char dev[16];      // Dev ID
@@ -43,25 +42,28 @@ int main (int argc,char *argv[]) {
 
   // Read temp continuously
   // Opening the device's file triggers new reading
-  float tempFirst,tempMax,tempMin,tempMax2,tempMin2;//declare all the variable that is available.
+  float tempFirst,tempMax,tempMin,tempMax2,tempMin2,tempCurrent;//declare all the variable that is available.
   int i = 0; 
   char maxc[7],minc[7],curc[7]; 
-  
-    
+  float cumulative=0;/*this is the value that represent the cumulative change*/
+  float change;/*difference between this time and last time*/
 
   while (1) {
     int fd = open(devPath, O_RDONLY);
     if (fd == -1)
-    {
-      perror ("Couldn't open the w1 device.");
-      return 1;
-    }
-
+    {perror ("Couldn't open the w1 device.");return 1;}
     while ((numRead = read(fd, buf, 256)) > 0)
     {
       strncpy(tmp, strstr(buf, "t=") + 2, 5);
-      float tempCurrent = strtof(tmp, NULL);
-
+      change=strtof(tmp, NULL)-tempCurrent;/*the current is still last time's "Current"*/
+      tempCurrent = strtof(tmp, NULL);/*assign the value to current here*/ 
+      cumulative+=change;
+      if(cumulative>=1)
+      {
+      gcvt(tempMax/1000, 6, maxc); gcvt(tempMin/1000, 6, minc); gcvt(tempCurrent/1000, 6, curc);
+       ifttt("https://maker.ifttt.com/trigger/temp/with/key/b1QwPwFliGUWnU6LYgRbb1",maxc,minc,curc);
+      }
+      
       if (i == 0) {
         tempMax = tempCurrent;
         tempMin = tempCurrent;
@@ -84,18 +86,17 @@ int main (int argc,char *argv[]) {
         while (tempCurrent < tempMin) {
           tempMin = tempCurrent;
         }
-        if (tempCurrent - tempMax2 >= 1000) {
+        /*if (tempCurrent - tempMax2 >= 1000) {
           tempMax2 = tempCurrent;
           gcvt(tempMax2/1000, 6, maxc); gcvt(tempMin/1000, 6, minc); gcvt(tempFirst/1000, 6, curc);
           ifttt("https://maker.ifttt.com/trigger/temp/with/key/b1QwPwFliGUWnU6LYgRbb1",maxc,minc,curc);
         }
-
+wrong idea
         if (tempMin2 - tempCurrent >= 1000) {
           tempMin2 = tempCurrent;
           gcvt(tempMax/1000, 6, maxc); gcvt(tempMin/1000, 6, minc); gcvt(tempCurrent/1000, 6, curc);
           ifttt("https://maker.ifttt.com/trigger/temp/with/key/b1QwPwFliGUWnU6LYgRbb1",maxc,minc,curc);
-
-        }
+        }*/
       }
     }
     close(fd);
