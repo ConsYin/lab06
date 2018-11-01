@@ -42,7 +42,7 @@ int main (int argc,char *argv[]) {
 
   // Read temp continuously
   // Opening the device's file triggers new reading
-  float tempFirst,tempMax,tempMin,tempMax2,tempMin2,tempCurrent;//declare all the variable that is available.
+  float tempFirst,tempMax,tempMin,tempCurrent;//declare all the variable that is available.
   int i = 0; 
   char maxc[7],minc[7],curc[7]; 
   float cumulative=0;/*this is the value that represent the cumulative change*/
@@ -56,29 +56,26 @@ int main (int argc,char *argv[]) {
     {
       strncpy(tmp, strstr(buf, "t=") + 2, 5);
       change=strtof(tmp, NULL)-tempCurrent;/*the current is still last time's "Current"*/
-      tempCurrent = strtof(tmp, NULL);/*assign the value to current here*/ 
       cumulative+=change;
-      if(cumulative>=1)
+      if (i==0){};
+      else if(cumulative>=1000)
       {
-      gcvt(tempMax/1000, 6, maxc); gcvt(tempMin/1000, 6, minc); gcvt(tempCurrent/1000, 6, curc);
+       gcvt(tempMax/1000, 6, maxc); gcvt(tempMin/1000, 6, minc); gcvt(tempCurrent/1000, 6, curc);
        ifttt("https://maker.ifttt.com/trigger/temp/with/key/b1QwPwFliGUWnU6LYgRbb1",maxc,minc,curc);
-        cumulative=0;
+       cumulative=0;
       }
-      
+      tempCurrent = strtof(tmp, NULL);/*assign the value to current here*/ 
       if (i == 0) {
         tempMax = tempCurrent;
         tempMin = tempCurrent;
         tempFirst = tempCurrent;
-        tempMax2 = tempCurrent;
-        tempMin2 = tempCurrent;
         gcvt(tempMax/1000, 6, maxc); gcvt(tempMin/1000, 6, minc); gcvt(tempFirst/1000, 6, curc);
         ifttt("https://maker.ifttt.com/trigger/temp/with/key/b1QwPwFliGUWnU6LYgRbb1",maxc,minc,curc);
         i++;
       }
-
-      /*printf("Device: %s  - ", dev);*/
+      
       printf("Current Temp: %.3f C\nMax Temp: %.3f C\nMin Temp: %.3f C\n\n\n", tempCurrent / 1000, tempMax / 1000, tempMin / 1000);
-      /*printf("%.3f F\n\n", (tempC / 1000) * 9 / 5 + 32);*/
+      /*print out what is going on.*/
       time_t second = time(NULL);
       while (difftime(time(NULL), second) <= 1) {
         while (tempCurrent > tempMax) {
