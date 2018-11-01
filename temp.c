@@ -56,7 +56,7 @@ int main (int argc,char *argv[]) {
     {
       strncpy(tmp, strstr(buf, "t=") + 2, 5);
       tempCurrent2=strtof(tmp, NULL);
-      change=tempCurrent2-tempCurrent;/*the current is still last time's "Current"*/
+      
       cumulative+=change;
       if (tempCurrent2 > tempMax) {
           tempMax = tempCurrent2;
@@ -68,17 +68,19 @@ int main (int argc,char *argv[]) {
         tempMax = tempCurrent2;
         tempMin = tempCurrent2;
         tempFirst = tempCurrent2;
+        tempCurrent = tempCurrent2;/*assign the value to current here*/
         gcvt(tempMax/1000, 6, maxc); gcvt(tempMin/1000, 6, minc); gcvt(tempFirst/1000 , 6, curc);
         ifttt("https://maker.ifttt.com/trigger/temp/with/key/b1QwPwFliGUWnU6LYgRbb1",maxc,minc,curc);
         i++;
       }
+      change=tempCurrent2-tempCurrent;/*the current is still last time's "Current"*/
       else if(cumulative>=1000 ||cumulative<=-1000 )
       {
        gcvt(tempMax/1000, 6, maxc); gcvt(tempMin/1000, 6, minc); gcvt(tempCurrent2/1000, 6, curc);
        ifttt("https://maker.ifttt.com/trigger/temp/with/key/b1QwPwFliGUWnU6LYgRbb1",maxc,minc,curc);
        cumulative=0;
       }
-      tempCurrent = tempCurrent2;/*assign the value to current here*/ 
+       tempCurrent = tempCurrent2;/*assign the value to current here*/
       
       
       printf("Current Temp: %.3f C\nMax Temp: %.3f C\nMin Temp: %.3f C\n\n\n", tempCurrent / 1000, tempMax / 1000, tempMin / 1000);
