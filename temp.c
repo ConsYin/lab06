@@ -76,7 +76,7 @@ int main (int argc,char *argv[]) {
         tempMax = tempCurrent;
         tempMin = tempCurrent;
         tempFirst = tempCurrent;
-        gcvt(tempMax/1000, 6, maxc); gcvt(tempMin/1000, 6, minc); gcvt(tempFirst/1000, 6, curc);
+        gcvt(tempMax/1000, 6, maxc); gcvt(tempMin/1000, 6, minc); gcvt(tempFirst/1000 +1, 6, curc);
         ifttt("https://maker.ifttt.com/trigger/temp/with/key/b1QwPwFliGUWnU6LYgRbb1",maxc,minc,curc);
         i++;
       }
