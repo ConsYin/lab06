@@ -45,7 +45,7 @@ int main (int argc,char *argv[]) {
   // Opening the device's file triggers new reading
   float tempFirst,tempMax,tempMin,tempMax2,tempMin2;//declare all the variable that is available.
   int i = 0; 
-  char maxc[7],min[7],curc[7]; 
+  char maxc[7],minc[7],curc[7]; 
   
     
 
@@ -68,7 +68,7 @@ int main (int argc,char *argv[]) {
         tempFirst = tempCurrent;
         tempMax2 = tempCurrent;
         tempMin2 = tempCurrent;
-        gcvt(tempMax, 6, maxc); gcvt(tempMin, 6, minc); gcvt(tempFirst, 6, curc);
+        gcvt(tempMax/1000, 6, maxc); gcvt(tempMin/1000, 6, minc); gcvt(tempFirst/1000, 6, curc);
         ifttt("https://maker.ifttt.com/trigger/temp/with/key/b1QwPwFliGUWnU6LYgRbb1",maxc,minc,curc);
         i++;
       }
@@ -86,13 +86,13 @@ int main (int argc,char *argv[]) {
         }
         if (tempCurrent - tempMax2 >= 1000) {
           tempMax2 = tempCurrent;
-          gcvt(tempMax2, 6, maxc); gcvt(tempMin, 6, minc); gcvt(tempFirst, 6, curc);
+          gcvt(tempMax2/1000, 6, maxc); gcvt(tempMin/1000, 6, minc); gcvt(tempFirst/1000, 6, curc);
           ifttt("https://maker.ifttt.com/trigger/temp/with/key/b1QwPwFliGUWnU6LYgRbb1",maxc,minc,curc);
         }
 
         if (tempMin2 - tempCurrent >= 1000) {
           tempMin2 = tempCurrent;
-          gcvt(tempMax, 6, maxc); gcvt(tempMin, 6, minc); gcvt(tempFirst, 6, curc);
+          gcvt(tempMax/1000, 6, maxc); gcvt(tempMin/1000, 6, minc); gcvt(tempCurrent/1000, 6, curc);
           ifttt("https://maker.ifttt.com/trigger/temp/with/key/b1QwPwFliGUWnU6LYgRbb1",maxc,minc,curc);
 
         }
