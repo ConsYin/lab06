@@ -74,7 +74,7 @@ int main (int argc,char *argv[]) {
         i++;
       }
       change=tempCurrent2-tempCurrent;/*the current is still last time's "Current"*/
-      else if(cumulative>=1000 ||cumulative<=-1000 )
+      if(cumulative>=1000 ||cumulative<=-1000 )
       {
        gcvt(tempMax/1000, 6, maxc); gcvt(tempMin/1000, 6, minc); gcvt(tempCurrent2/1000, 6, curc);
        ifttt("https://maker.ifttt.com/trigger/temp/with/key/b1QwPwFliGUWnU6LYgRbb1",maxc,minc,curc);
